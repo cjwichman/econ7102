@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECON 7102 — Environmental Economics I</title>
+<meta name="description" content="ECON 7102, Environmental Economics I. Georgia Institute of Technology, Fall 2026.">
+<style>
+/* ===========================================================================
+   Palette. Warm neutral ground, deep slate ink, two earth accents.
+   Metadata is set in mono; prose in sans.
+   =========================================================================== */
+:root {
+  --paper:   #faf8f4;
+  --card:    #ffffff;
+  --ink:     #1f2328;
+  --body:    #3f464f;
+  --mute:    #7d848d;
+  --faint:   #a8aeb6;
+  --rule:    #e6e2da;
+  --rule-2:  #efece5;
+
+  --clay:    #a05a3c;   /* readings, primary accent */
+  --moss:    #5f7256;   /* slides */
+  --slate:   #46586e;   /* structural, links */
+  --sand:    #c9a227;   /* response-due */
+
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0 1.5rem 6rem;
+  font: 16.5px/1.6 var(--sans);
+  color: var(--body);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 52rem; margin: 0 auto; }
+
+a { color: var(--slate); text-decoration: none; border-bottom: 1px solid #cfd6de; }
+a:hover { border-bottom-color: var(--slate); }
+
+svg.ic { width: 11px; height: 11px; fill: none; stroke: currentColor;
+         stroke-width: 1.6; vertical-align: -1px; margin-right: 0.38em; }
+
+/* ---------------------------------------------------------------- masthead */
+header { padding: 3.25rem 0 0; }
+
+.eyebrow {
+  font: 600 0.72rem/1 var(--mono);
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--clay); margin: 0 0 0.85rem;
+}
+
+h1 {
+  margin: 0; font-size: 1.95rem; line-height: 1.18; font-weight: 600;
+  color: var(--ink); letter-spacing: -0.018em;
+}
+
+.sub {
+  margin: 0.45rem 0 0; font: 0.9rem/1.5 var(--mono);
+  color: var(--mute); letter-spacing: 0.01em;
+}
+
+.docs { margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.docs a {
+  font: 500 0.83rem/1 var(--mono); letter-spacing: 0.01em;
+  border: 1px solid var(--rule); border-radius: 4px;
+  padding: 0.55rem 0.85rem; background: var(--card); color: var(--body);
+  display: inline-flex; align-items: center;
+}
+.docs a:hover { border-color: var(--slate); color: var(--slate); }
+
+/* ------------------------------------------------------- course info panel */
+.info {
+  margin: 1.75rem 0 0; border: 1px solid var(--rule);
+  border-radius: 5px; background: var(--card);
+}
+.info > summary {
+  cursor: pointer; list-style: none; padding: 0.8rem 1rem;
+  font: 600 0.73rem/1 var(--mono); letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--mute); display: flex; align-items: center;
+}
+.info > summary::-webkit-details-marker { display: none; }
+.info > summary::after {
+  content: "+"; margin-left: auto; font-size: 1rem; color: var(--faint);
+  line-height: 1;
+}
+.info[open] > summary::after { content: "–"; }
+.info > summary:hover { color: var(--ink); }
+.info .panel { padding: 0 1rem 1.15rem; }
+
+dl.facts { margin: 0; display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.32rem 0.5rem; }
+dl.facts dt {
+  font: 500 0.75rem/1.5 var(--mono); letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--faint); padding-top: 0.1em;
+}
+dl.facts dd { margin: 0; font-size: 0.94rem; }
+
+.info h4 {
+  margin: 1.35rem 0 0.5rem; font: 600 0.72rem/1 var(--mono);
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint);
+}
+.info ul.keyed { margin: 0; padding: 0; list-style: none; }
+.info ul.keyed li {
+  font-size: 0.9rem; margin-bottom: 0.4rem; padding-left: 0;
+  display: flex; gap: 0.6rem; align-items: baseline;
+}
+.info ul.keyed li > :first-child { flex: none; }
+
+.notice {
+  margin: 1.35rem 0 0; padding: 0.7rem 0.85rem; border-radius: 4px;
+  background: #f6f3ec; border-left: 2px solid var(--clay);
+  font-size: 0.89rem; color: #5a5147;
+}
+
+/* -------------------------------------------------------------- deadlines */
+h2 {
+  margin: 3rem 0 0.9rem; font: 600 0.73rem/1 var(--mono);
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay);
+}
+
+table.deadlines { border-collapse: collapse; width: 100%; }
+table.deadlines td { padding: 0.5rem 0.8rem 0.5rem 0; border-bottom: 1px solid var(--rule-2); }
+table.deadlines tr:last-child td { border-bottom: 0; }
+table.deadlines td:first-child {
+  white-space: nowrap; width: 9rem; color: var(--ink);
+  font: 500 0.83rem/1.6 var(--mono); font-variant-numeric: tabular-nums;
+}
+table.deadlines td:last-child { font-size: 0.94rem; }
+
+/* --------------------------------------------------------------- week nav */
+.weeknav {
+  position: sticky; top: 0; z-index: 10;
+  margin: 2.75rem 0 0; padding: 0.7rem 0 0.65rem;
+  background: rgba(250,248,244,0.93); backdrop-filter: saturate(1.4) blur(8px);
+  border-bottom: 1px solid var(--rule);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem;
+}
+.weeknav .lbl {
+  font: 600 0.68rem/1 var(--mono); letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--faint); margin-right: 0.55rem;
+}
+.weeknav a {
+  font: 500 0.78rem/1 var(--mono); border: 0; border-radius: 3px;
+  min-width: 1.75rem; text-align: center; padding: 0.3rem 0.25rem;
+  color: var(--mute);
+}
+.weeknav a:hover { background: #efece5; color: var(--ink); }
+.weeknav a.now { background: var(--clay); color: #fff; }
+.weeknav button {
+  margin-left: auto; font: 500 0.75rem/1 var(--mono);
+  letter-spacing: 0.03em; color: var(--mute); background: none;
+  border: 1px solid var(--rule); border-radius: 3px;
+  padding: 0.35rem 0.65rem; cursor: pointer;
+}
+.weeknav button:hover { border-color: var(--slate); color: var(--slate); }
+
+/* ------------------------------------------------------------------ weeks */
+.week { border-bottom: 1px solid var(--rule); }
+.week > summary {
+  cursor: pointer; list-style: none; display: flex; align-items: baseline;
+  padding: 1.05rem 0 1rem;
+}
+.week > summary::-webkit-details-marker { display: none; }
+.week > summary::before {
+  content: "+"; width: 1.3rem; flex: none;
+  font: 400 0.95rem/1 var(--mono); color: var(--faint);
+}
+.week[open] > summary::before { content: "–"; }
+.week > summary:hover .wk { color: var(--clay); }
+.wk {
+  font: 600 0.98rem/1 var(--sans); color: var(--ink); letter-spacing: -0.005em;
+}
+.span {
+  margin-left: auto; font: 400 0.78rem/1 var(--mono);
+  color: var(--faint); letter-spacing: 0.01em;
+}
+.week[data-current] > summary::before { color: var(--clay); }
+.week[data-current] .wk::after {
+  content: "this week"; margin-left: 0.7rem;
+  font: 600 0.62rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--clay); vertical-align: 0.15em;
+}
+
+/* --------------------------------------------------------------- meetings */
+.meeting { padding: 0 0 1.4rem 1.3rem; }
+.week > .meeting:last-of-type { padding-bottom: 1.7rem; }
+
+.meeting h3 {
+  margin: 0 0 0.6rem; font-weight: 500; font-size: 0.98rem;
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 0.6rem;
+}
+.meeting time {
+  font: 500 0.78rem/1.5 var(--mono); color: var(--mute);
+  letter-spacing: 0.01em; font-variant-numeric: tabular-nums;
+  min-width: 5.6rem; flex: none;
+}
+.cn {
+  font: 600 0.68rem/1 var(--mono); letter-spacing: 0.06em;
+  color: var(--slate); background: #eaeef3; border-radius: 3px;
+  padding: 0.25em 0.42em; flex: none;
+}
+.topic { color: var(--ink); font-weight: 550; }
+
+.meeting.off { padding-bottom: 0.9rem; }
+.meeting.off h3 { margin: 0; }
+.off-label {
+  font: 400 0.85rem/1.5 var(--sans); color: var(--faint); font-style: italic;
+}
+
+/* ---------------------------------------------------------------- buckets */
+.bucket {
+  border-left: 2px solid var(--rule); padding: 0.15rem 0 0.15rem 0.85rem;
+  margin: 0 0 0.5rem 0.15rem;
+}
+.bucket .tag {
+  display: inline-flex; align-items: center;
+  font: 600 0.64rem/1 var(--mono); letter-spacing: 0.13em; text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.bucket.slides { border-left-color: var(--moss); }
+.bucket.slides .tag { color: var(--moss); }
+.bucket.reading { border-left-color: var(--clay); }
+.bucket.reading .tag { color: var(--clay); }
+.bucket.slides { display: flex; align-items: center; gap: 0.75rem; }
+.bucket.slides .tag { margin-bottom: 0; }
+
+.chip {
+  font: 500 0.8rem/1 var(--mono); border: 1px solid #d5ddd0; border-radius: 4px;
+  padding: 0.38rem 0.7rem; background: #f4f7f2; color: #465340;
+}
+.chip:hover { background: #e9efe5; border-color: var(--moss); }
+
+.bucket.reading ul { margin: 0; padding-left: 1.05rem; }
+.bucket.reading li { margin-bottom: 0.5rem; font-size: 0.95rem; }
+.bucket.reading li::marker { color: var(--faint); }
+.bucket.empty .tbd { font-size: 0.9rem; color: var(--faint); font-style: italic; }
+
+a.dl, a.ext {
+  font: 600 0.7rem/1 var(--mono); letter-spacing: 0.04em; text-transform: uppercase;
+  border: 0; border-radius: 3px; padding: 0.26em 0.45em;
+  background: #eef1f5; color: var(--slate); white-space: nowrap;
+}
+a.ext { background: #f1efeb; color: var(--mute); }
+a.dl:hover { background: #dfe6ee; }
+a.ext:hover { background: #e7e4de; }
+
+.badge {
+  display: inline-block; white-space: nowrap;
+  font: 600 0.66rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.28em 0.5em; border-radius: 3px;
+}
+.badge.resp { background: #f6ecc9; color: #6b551a; border: 1px solid #e6d59b; }
+.badge.disc { background: #edeef1; color: var(--slate); border: 1px solid #dcdfe5; }
+
+.aside { margin: 0.15rem 0 0 1rem; font-size: 0.89rem; color: var(--mute); font-style: italic; }
+
+/* ----------------------------------------------------------------- footer */
+footer {
+  margin-top: 3.5rem; padding-top: 1.2rem; border-top: 1px solid var(--rule);
+  font: 400 0.76rem/1.6 var(--mono); color: var(--faint);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem;
+}
+
+@media (max-width: 620px) {
+  body { padding: 0 1.05rem 4rem; font-size: 16px; }
+  h1 { font-size: 1.6rem; }
+  dl.facts { grid-template-columns: 1fr; gap: 0 0; }
+  dl.facts dt { margin-top: 0.55rem; }
+  .meeting { padding-left: 0.45rem; }
+  .meeting time { min-width: 100%; }
+  table.deadlines td:first-child { width: 6.5rem; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-slides" viewBox="0 0 16 16">
+    <rect x="1.5" y="2.5" width="13" height="9" rx="1"/><path d="M8 11.5v2M5.5 13.5h5"/>
+  </symbol>
+  <symbol id="i-paper" viewBox="0 0 16 16">
+    <path d="M3.5 1.5h6l3 3v10h-9z"/><path d="M9.5 1.5v3h3M5.5 8h5M5.5 10.5h5"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Georgia Tech &middot; Fall 2026</p>
+  <h1>ECON 7102 — Environmental Economics I</h1>
+  <p class="sub">Ph.D. field course &middot; Mon/Wed 11:00–12:15 &middot; West Architecture 259</p>
+
+  <p class="docs">
+    <a href="econ7102_fall2026_details.pdf">Course details (PDF)</a>
+    <a href="econ7102_fall2026_syllabus.pdf">Syllabus (PDF)</a>
+  </p>
+</header>
+
+<details class="info" open>
+  <summary>Course information</summary>
+  <div class="panel">
+
+    <dl class="facts">
+      <dt>Meets</dt>      <dd>Monday and Wednesday, 11:00 AM – 12:15 PM</dd>
+      <dt>Room</dt>       <dd>West Architecture 259</dd>
+      <dt>Instructor</dt> <dd>Prof. Casey J. Wichman</dd>
+      <dt>Email</dt>      <dd><a href="mailto:wichman@gatech.edu">wichman@gatech.edu</a></dd>
+      <dt>Office</dt>     <dd>Old Civil Engineering 310, by appointment</dd>
+      <dt>Text</dt>       <dd><strong>P&amp;R</strong> — Phaneuf &amp; Requate (2017),
+                              <em>A Course in Environmental Economics</em></dd>
+    </dl>
+
+    <h4>Reading the schedule</h4>
+    <ul class="keyed">
+      <li><span class="badge resp">response due</span>
+          <span>Written response, submitted on Canvas by 11:59 PM the night before class.</span></li>
+      <li><span class="badge disc">discussion</span>
+          <span>Eligible for a student-led discussion.</span></li>
+      <li><a class="chip" href="#">class00.pdf</a>
+          <span>Slides, posted before each class.</span></li>
+    </ul>
+
+    <p class="notice">
+      This page is the current schedule and will change as the semester goes on.
+      Changes are posted here and announced in class.
+    </p>
+
+  </div>
+</details>
+
+<h2>Deadlines</h2>
+<table class="deadlines">
+  <tr><td>Oct 9</td><td>Project idea and research sketch</td></tr>
+  <tr><td>Nov 6</td><td>Expanded outline and literature review</td></tr>
+  <tr><td>Nov 23 – Dec 7</td><td>Proposal presentations</td></tr>
+  <tr><td>Dec 11</td><td>Final proposal</td></tr>
+</table>
+<p class="aside">
+  Reading responses are due the night before the class in which the reading is
+  assigned. Referee report deadline TBA.
+</p>
+
+<nav class="weeknav">
+  <span class="lbl">Week</span>
+  <a href="#week1">1</a> <a href="#week2">2</a> <a href="#week3">3</a> <a href="#week4">4</a> <a href="#week5">5</a> <a href="#week6">6</a> <a href="#week7">7</a> <a href="#week8">8</a> <a href="#week9">9</a> <a href="#week10">10</a> <a href="#week11">11</a> <a href="#week12">12</a> <a href="#week13">13</a> <a href="#week14">14</a> <a href="#week15">15</a> <a href="#week16">16</a>
+  <button id="toggle" type="button">Expand all</button>
+</nav>
+
+
+<details class="week" id="week1" open data-from="2026-08-24" data-to="2026-08-26">
+  <summary><span class="wk">Week 1</span><span class="span">Aug 24–Aug 26</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Aug 24</time><span class="cn">01</span><span class="topic">Overview</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class01.pdf">class01.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Syllabus</li>
+      </ul>
+    </div>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Aug 26</time><span class="cn">02</span><span class="topic">Introduction to environmental economics</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class02.pdf">class02.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Don Fullerton and Robert Stavins (1998). “How economists see the environment.” <em>Nature</em>. <a class="dl" href="readings/class02_fullerton-1998.pdf">PDF</a> <a class="ext" href="https://scholar.harvard.edu/files/stavins/files/how_economists_see_the_environment.pdf">link</a></li>
+        <li>Kenneth J. Arrow et al. (1996). “Is there a role for benefit-cost analysis in environmental, health, and safety regulation?” <em>Science</em>. <a class="dl" href="readings/class02_arrow-1996.pdf">PDF</a></li>
+        <li>John V. Krutilla (1967). “Conservation reconsidered.” <em>American Economic Review</em>. <a class="dl" href="readings/class02_krutilla-1967.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week2" open data-from="2026-08-31" data-to="2026-09-02">
+  <summary><span class="wk">Week 2</span><span class="span">Aug 31–Sep 2</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Aug 31</time><span class="cn">03</span><span class="topic">Theory of externalities</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class03.pdf">class03.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapters 1–2</li>
+        <li>Paul A. Samuelson (1954). “The pure theory of public expenditure.” <em>Review of Economics and Statistics</em>. <a class="dl" href="readings/class03_samuelson-1954.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Sep 2</time><span class="cn">04</span><span class="topic">Theory of environmental policy</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class04.pdf">class04.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 3</li>
+        <li>Ronald Coase (1960). “The problem of social cost.” <em>Journal of Law and Economics</em>. <a class="dl" href="readings/class04_coase-1960.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week3" open data-from="2026-09-07" data-to="2026-09-09">
+  <summary><span class="wk">Week 3</span><span class="span">Sep 7–Sep 9</span></summary>
+  <article class="meeting off">
+    <h3><time>Mon Sep 7</time><span class="off-label">Labor Day – no class</span></h3>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Sep 9</time><span class="cn">05</span><span class="topic">Instrument choice I</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class05.pdf">class05.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 4</li>
+        <li>Martin Weitzman (1974). “Prices versus quantities.” <em>Review of Economic Studies</em>. <a class="dl" href="readings/class05_weitzman-1974.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week4" open data-from="2026-09-14" data-to="2026-09-16">
+  <summary><span class="wk">Week 4</span><span class="span">Sep 14–Sep 16</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Sep 14</time><span class="cn">06</span><span class="topic">Instrument choice II</span></h3>
+    <!-- TODO: Chapter 5 is covered across Classes 6 and 7. -->
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class06.pdf">class06.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 5</li>
+        <li>Lawrence Goulder and Ian Parry (2008). “Instrument choice in environmental policy.” <em>Review of Environmental Economics and Policy</em>. <a class="dl" href="readings/class06_goulder-2008.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Sep 16</time><span class="cn">07</span><span class="topic">Instrument choice III</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class07.pdf">class07.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 5, continued</li>
+        <li>Thomas H. Tietenberg (1990). “Economic instruments for environmental regulation.” <em>Oxford Review of Economic Policy</em>. <a class="dl" href="readings/class07_tietenberg-1990.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week5" open data-from="2026-09-21" data-to="2026-09-23">
+  <summary><span class="wk">Week 5</span><span class="span">Sep 21–Sep 23</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Sep 21</time><span class="cn">08</span><span class="topic">Instrument choice IV</span></h3>
+    <!-- TODO: Fall 2025 note to self: simplify the double-dividend and tax-interaction material in Chapter 7. -->
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class08.pdf">class08.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 7</li>
+        <li>Lawrence Goulder, Ian Parry, Roberton C. Williams III, and Dallas Burtraw (1999). “The cost-effectiveness of alternative instruments for environmental protection in a second-best setting.” <em>Journal of Public Economics</em>. <a class="dl" href="readings/class08_goulder-1999.pdf">PDF</a></li>
+        <li>Sarah E. West and Roberton C. Williams III (2007). “Optimal taxation and cross-price effects on labor supply: Estimates of the optimal gas tax.” <em>Journal of Public Economics</em>. <a class="dl" href="readings/class08_west-2007.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Sep 23</time><span class="cn">09</span><span class="topic">Welfare analysis</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class09.pdf">class09.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 14</li>
+        <li>Robert D. Willig (1976). “Consumer's surplus without apology.” <em>American Economic Review</em>. <a class="dl" href="readings/class09_willig-1976.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week6" open data-from="2026-09-28" data-to="2026-09-30">
+  <summary><span class="wk">Week 6</span><span class="span">Sep 28–Sep 30</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Sep 28</time><span class="cn">10</span><span class="topic">Valuation I – revealed preference</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class10.pdf">class10.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 15</li>
+        <li>W. Michael Hanemann (1991). “Willingness to pay and willingness to accept: How much can they differ?” <em>American Economic Review</em>. <a class="dl" href="readings/class10_hanemann-1991.pdf">PDF</a></li>
+        <li>Jason F. Shogren, Seung Y. Shin, Dermot J. Hayes, and James B. Kliebenstein (1994). “Resolving differences in willingness to pay and willingness to accept.” <em>American Economic Review</em>. <a class="dl" href="readings/class10_shogren-1994.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Sep 30</time><span class="cn">11</span><span class="topic">Valuation II – property value models</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class11.pdf">class11.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 18, focusing on 18.1 and 18.2</li>
+        <li>Kenneth Y. Chay and Michael Greenstone (2005). “Does air quality matter? Evidence from the housing market.” <em>Journal of Political Economy</em>. <a class="dl" href="readings/class11_chay-2005.pdf">PDF</a></li>
+        <li>H. Spencer Banzhaf and Randall P. Walsh (2008). “Do people vote with their feet? An empirical test of Tiebout.” <em>American Economic Review</em>. <a class="dl" href="readings/class11_banzhaf-2008.pdf">PDF</a></li>
+        <li>Peter Christensen and Christopher Timmins (2022). “Sorting or steering: The effects of housing discrimination on neighborhood choice.” <em>Journal of Political Economy</em>. <a class="dl" href="readings/class11_christensen-2022.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week7" open data-from="2026-10-05" data-to="2026-10-07">
+  <summary><span class="wk">Week 7</span><span class="span">Oct 5–Oct 7</span></summary>
+  <article class="meeting off">
+    <h3><time>Mon Oct 5</time><span class="off-label">Fall recess – no class</span></h3>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Oct 7</time><span class="cn">12</span><span class="topic">Attend SWEEEP in lieu of class</span></h3>
+    <!-- TODO: PLACEHOLDER. SWEEEP runs Oct 8--9, 2026. This slot mirrors the Fall 2025 arrangement, where the class immediately preceding the workshop was replaced by attendance. Adjust the class number and which slot it displaces once the workshop program is set. -->
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class12.pdf">class12.pdf</a></div> -->
+    <p class="aside">Readings TBD.</p>
+  </article>
+</details>
+
+<details class="week" id="week8" open data-from="2026-10-12" data-to="2026-10-14">
+  <summary><span class="wk">Week 8</span><span class="span">Oct 12–Oct 14</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Oct 12</time><span class="cn">13</span><span class="topic">Guest lecture – hedonics and VSL</span></h3>
+    <!-- TODO: Fall 2025 guest lecturers were Bobby Harris (Class 12) and Laura Taylor (Class 13). Confirm guests for Fall 2026. -->
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class13.pdf">class13.pdf</a></div> -->
+    <p class="aside">Readings TBD.</p>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Oct 14</time><span class="cn">14</span><span class="topic">Marginal cost of public funds</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class14.pdf">class14.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Amy Finkelstein and Nathaniel Hendren (2020). “Welfare analysis meets causal inference.” <em>Journal of Economic Perspectives</em>. <a class="dl" href="readings/class14_finkelstein-2020.pdf">PDF</a></li>
+        <li>Robert W. Hahn, Nathaniel Hendren, Robert D. Metcalfe, and Ben Sprung-Keyser (2024). “A welfare analysis of policies impacting climate change.” <em>NBER Working Paper 32728</em>. <a class="dl" href="readings/class14_hahn-2024.pdf">PDF</a> <a class="ext" href="https://www.nber.org/papers/w32728">link</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week9" open data-from="2026-10-19" data-to="2026-10-21">
+  <summary><span class="wk">Week 9</span><span class="span">Oct 19–Oct 21</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Oct 19</time><span class="cn">15</span><span class="topic">Midterm (in class)</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class15.pdf">class15.pdf</a></div> -->
+    <p class="aside">No assigned reading.</p>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Oct 21</time><span class="cn">16</span><span class="topic">TBD</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class16.pdf">class16.pdf</a></div> -->
+    <p class="aside">Readings TBD.</p>
+  </article>
+</details>
+
+<details class="week" id="week10" open data-from="2026-10-26" data-to="2026-10-28">
+  <summary><span class="wk">Week 10</span><span class="span">Oct 26–Oct 28</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Oct 26</time><span class="cn">17</span><span class="topic">Topics: Utility pricing</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class17.pdf">class17.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Casey J. Wichman (2024). “Efficiency, equity, and cost-recovery trade-offs in municipal water pricing.” <em>RFF Working Paper</em>. <a class="dl" href="readings/class17_wichman-2024.pdf">PDF</a> <span class="badge resp">response due</span></li>
+        <li>Arik Levinson and Emilson Silva (2022). “The electric Gini: Income redistribution through energy prices.” <em>American Economic Journal: Economic Policy</em>. <a class="dl" href="readings/class17_levinson-2022.pdf">PDF</a></li>
+        <li>Koichiro Ito (2014). “Do consumers respond to marginal or average price? Evidence from nonlinear electricity pricing.” <em>American Economic Review</em>. <a class="dl" href="readings/class17_ito-2014.pdf">PDF</a></li>
+      </ul>
+    </div>
+    <p class="aside"><em>Discussion led by Prof. Wichman.</em></p>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Oct 28</time><span class="cn">18</span><span class="topic">Topics: Water</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class18.pdf">class18.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>David A. Keiser, Bhashkar Mazumder, David Molitor, and Joseph S. Shapiro (2023). “Water works: Causes and consequences of safe drinking water in America.” <em>Working Paper</em>. <a class="dl" href="readings/class18_keiser-2023.pdf">PDF</a> <span class="badge disc">discussion</span></li>
+        <li>W. Michael Hanemann (2006). “The economic conception of water.” <em>Water Crisis: Myth or Reality?</em>. <a class="dl" href="readings/class18_hanemann-2006.pdf">PDF</a></li>
+        <li>Sheila M. Olmstead (2010). “The economics of managing scarce water resources.” <em>Review of Environmental Economics and Policy</em>. <a class="dl" href="readings/class18_olmstead-2010.pdf">PDF</a></li>
+        <li>Andrew B. Ayres, Kyle C. Meng, and Andrew J. Plantinga (2021). “Do environmental markets improve on open access? Evidence from California groundwater rights.” <em>Journal of Political Economy</em>. <a class="dl" href="readings/class18_ayres-2021.pdf">PDF</a> <span class="badge disc">discussion</span></li>
+        <li>Charles A. Taylor and Hannah Druckenmiller (2022). “Wetlands, flooding, and the Clean Water Act.” <em>American Economic Review</em>. <a class="dl" href="readings/class18_taylor-2022.pdf">PDF</a> <span class="badge disc">discussion</span></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week11" open data-from="2026-11-02" data-to="2026-11-04">
+  <summary><span class="wk">Week 11</span><span class="span">Nov 2–Nov 4</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Nov 2</time><span class="cn">19</span><span class="topic">Topics: Electricity externalities and pricing</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class19.pdf">class19.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Stephen P. Holland, Erin T. Mansur, Nicholas Z. Muller, and Andrew J. Yates (2016). “Are there environmental benefits from driving electric vehicles? The importance of local factors.” <em>American Economic Review</em>. <a class="dl" href="readings/class19_holland-2016.pdf">PDF</a> <span class="badge disc">discussion</span></li>
+        <li>Severin Borenstein and James B. Bushnell (2022). “Do two electricity pricing wrongs make a right? Cost recovery, externalities, and efficiency.” <em>American Economic Journal: Economic Policy</em>. <a class="dl" href="readings/class19_borenstein-2022.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Nov 4</time><span class="cn">20</span><span class="topic">Topics: Energy and smart technologies</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class20.pdf">class20.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Joshua Blonz, Karen Palmer, Casey J. Wichman, and Derek C. Wietelman (2025). “Smart thermostats, automation, and time-varying prices.” <em>American Economic Journal: Applied Economics</em>. <a class="dl" href="readings/class20_blonz-2025.pdf">PDF</a> <span class="badge disc">discussion</span></li>
+        <li>Megan R. Bailey, David P. Brown, Blake C. Shaffer, and Frank A. Wolak (2025). “Take the load off: Time and technology as determinants of electricity demand response.” <em>NBER Working Paper 33836</em>. <a class="dl" href="readings/class20_bailey-2025.pdf">PDF</a> <a class="ext" href="https://www.nber.org/papers/w33836">link</a> <span class="badge disc">discussion</span></li>
+        <li>Alec Brandon, Christopher M. Clapp, John A. List, Robert D. Metcalfe, and Michael Price (2022). “The human perils of scaling smart technologies: Evidence from field experiments.” <em>NBER Working Paper 30482</em>. <a class="dl" href="readings/class20_brandon-2022.pdf">PDF</a> <a class="ext" href="https://www.nber.org/papers/w30482">link</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week12" open data-from="2026-11-09" data-to="2026-11-11">
+  <summary><span class="wk">Week 12</span><span class="span">Nov 9–Nov 11</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Nov 9</time><span class="cn">21</span><span class="topic">Topics: Climate change</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class21.pdf">class21.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Tamma Carleton et al. (2022). “Valuing the global mortality consequences of climate change accounting for adaptation costs and benefits.” <em>Quarterly Journal of Economics</em>. <a class="dl" href="readings/class21_carleton-2022.pdf">PDF</a> <span class="badge disc">discussion</span></li>
+        <li>Alan Barreca, Karen Clay, Olivier Deschenes, Michael Greenstone, and Joseph S. Shapiro (2016). “Adapting to climate change: The remarkable decline in the US temperature-mortality relationship over the twentieth century.” <em>Journal of Political Economy</em>. <a class="dl" href="readings/class21_barreca-2016.pdf">PDF</a> <span class="badge disc">discussion</span></li>
+        <li>Marshall Burke, Solomon M. Hsiang, and Edward Miguel (2015). “Global non-linear effect of temperature on economic production.” <em>Nature</em>. <a class="dl" href="readings/class21_burke-2015.pdf">PDF</a></li>
+        <li>Kevin Rennert et al. (2022). “Comprehensive evidence implies a higher social cost of CO2.” <em>Nature</em>. <a class="dl" href="readings/class21_rennert-2022.pdf">PDF</a></li>
+        <li>Tamma Carleton and Michael Greenstone (2022). “A guide to updating the US government's social cost of carbon.” <em>Review of Environmental Economics and Policy</em>. <a class="dl" href="readings/class21_carleton-greenstone-2022.pdf">PDF</a></li>
+        <li>Robert S. Pindyck (2013). “Climate change policy: What do the models tell us?” <em>Journal of Economic Literature</em>. <a class="dl" href="readings/class21_pindyck-2013.pdf">PDF</a></li>
+        <li>Wolfram Schlenker and Michael J. Roberts (2009). “Nonlinear temperature effects indicate severe damages to US crop yields under climate change.” <em>Proceedings of the National Academy of Sciences</em>. <a class="dl" href="readings/class21_schlenker-2009.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Nov 11</time><span class="cn">22</span><span class="topic">Topics: Conservation</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class22.pdf">class22.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Eyal Frank and Anant Sudarshan (2024). “The social costs of keystone species collapse: Evidence from the decline of vultures in India.” <em>American Economic Review</em>. <a class="dl" href="readings/class22_frank-2024.pdf">PDF</a> <span class="badge disc">discussion</span></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week13" open data-from="2026-11-16" data-to="2026-11-18">
+  <summary><span class="wk">Week 13</span><span class="span">Nov 16–Nov 18</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Nov 16</time><span class="cn">23</span><span class="topic">Topics: Forecasts</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class23.pdf">class23.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Renato Molina and Ivan Rudik (2024). “The social value of hurricane forecasts.” <em>NBER Working Paper 32548</em>. <a class="dl" href="readings/class23_molina-2024.pdf">PDF</a> <a class="ext" href="https://www.nber.org/papers/w32548">link</a> <span class="badge disc">discussion</span></li>
+      </ul>
+    </div>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Nov 18</time><span class="cn">24</span><span class="topic">Topics: Domestic climate policy</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class24.pdf">class24.pdf</a></div> -->
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li>Hunt Allcott, Reigner Kane, Maximilian S. Maydanchik, Joseph S. Shapiro, and Felix Tintelnot (2024). “The effects of Buy American: Electric vehicles and the Inflation Reduction Act.” <em>NBER Working Paper 33032</em>. <a class="dl" href="readings/class24_allcott-2024.pdf">PDF</a> <a class="ext" href="https://www.nber.org/papers/w33032">link</a> <span class="badge disc">discussion</span></li>
+        <li>John Bistline, Kimberly A. Clausing, Neil R. Mehrotra, James H. Stock, and Catherine Wolfram (2025). “Climate policy reform options in 2025.” <em>Environmental and Energy Policy and the Economy</em>. <a class="dl" href="readings/class24_bistline-2025.pdf">PDF</a></li>
+      </ul>
+    </div>
+  </article>
+</details>
+
+<details class="week" id="week14" open data-from="2026-11-23" data-to="2026-11-25">
+  <summary><span class="wk">Week 14</span><span class="span">Nov 23–Nov 25</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Nov 23</time><span class="cn">25</span><span class="topic">Proposal presentations</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class25.pdf">class25.pdf</a></div> -->
+    <p class="aside">No assigned reading.</p>
+  </article>
+  <article class="meeting off">
+    <h3><time>Wed Nov 25</time><span class="off-label">Thanksgiving break – no class</span></h3>
+  </article>
+</details>
+
+<details class="week" id="week15" open data-from="2026-11-30" data-to="2026-12-02">
+  <summary><span class="wk">Week 15</span><span class="span">Nov 30–Dec 2</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Nov 30</time><span class="cn">26</span><span class="topic">Proposal presentations</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class26.pdf">class26.pdf</a></div> -->
+    <p class="aside">No assigned reading.</p>
+  </article>
+  <article class="meeting">
+    <h3><time>Wed Dec 2</time><span class="cn">27</span><span class="topic">Proposal presentations</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class27.pdf">class27.pdf</a></div> -->
+    <p class="aside">No assigned reading.</p>
+  </article>
+</details>
+
+<details class="week" id="week16" open data-from="2026-12-07" data-to="2026-12-07">
+  <summary><span class="wk">Week 16</span><span class="span">Dec 7</span></summary>
+  <article class="meeting">
+    <h3><time>Mon Dec 7</time><span class="cn">28</span><span class="topic">Proposal presentations</span></h3>
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class28.pdf">class28.pdf</a></div> -->
+    <p class="aside">No assigned reading.</p>
+  </article>
+</details>
+
+<footer>
+  <span>ECON 7102 &middot; Casey J. Wichman</span>
+  <span>Georgia Institute of Technology</span>
+</footer>
+
+</div>
+
+<script>
+/* Progressive enhancement.
+
+   Every week carries `open` in the markup, so with scripting disabled the
+   whole schedule is visible. This closes everything except the week that
+   contains today's date, marks it in the nav, and scrolls to it.
+
+   Each week's span comes from its own data-from / data-to attributes, so the
+   behaviour follows the schedule automatically and needs no maintenance. */
+(function () {
+  var weeks = Array.prototype.slice.call(document.querySelectorAll('.week'));
+  if (!weeks.length) { return; }
+
+  var d = new Date();
+  var today = d.getFullYear() + '-' +
+              String(d.getMonth() + 1).padStart(2, '0') + '-' +
+              String(d.getDate()).padStart(2, '0');
+
+  var current = weeks.filter(function (w) {
+    return w.dataset.from <= today && today <= w.dataset.to;
+  })[0];
+
+  // Between meetings, or outside the term: the next week that has not
+  // finished, otherwise the last one.
+  if (!current) {
+    current = weeks.filter(function (w) { return w.dataset.to >= today; })[0]
+              || weeks[weeks.length - 1];
+  }
+
+  weeks.forEach(function (w) { w.open = (w === current); });
+  current.dataset.current = '';
+
+  var navlink = document.querySelector('.weeknav a[href="#' + current.id + '"]');
+  if (navlink) { navlink.classList.add('now'); }
+
+  // A hash in the URL wins over the date.
+  if (location.hash) {
+    var target = document.querySelector(location.hash);
+    if (target && target.classList.contains('week')) { target.open = true; }
+  } else if (weeks.indexOf(current) > 0) {
+    current.scrollIntoView({ block: 'start' });
+    window.scrollBy(0, -70);
+  }
+
+  document.querySelectorAll('.weeknav a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var t = document.querySelector(a.getAttribute('href'));
+      if (t) { t.open = true; }
+    });
+  });
+
+  var btn = document.getElementById('toggle');
+  btn.addEventListener('click', function () {
+    var expand = btn.textContent === 'Expand all';
+    weeks.forEach(function (w) { w.open = expand; });
+    btn.textContent = expand ? 'Collapse all' : 'Expand all';
+  });
+})();
+</script>
+
+</body>
+</html>

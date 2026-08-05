@@ -1,67 +1,130 @@
 # ECON 7102 — Environmental Economics I
 
-Course website. Quarto, published to GitHub Pages at
+Course website. Static HTML, served from GitHub Pages at
 <https://caseyjwichman.com/econ7102/>.
 
-Scope is the weekly schedule and the readings. Course policies live in the
-syllabus PDF and are not repeated here.
+Scope is the weekly schedule, the readings, and the slides. Course policies
+live in the syllabus PDF and are not repeated here.
+
+No build step. `index.html` is both the source and what gets served. Editing it
+and pushing puts the change live. There is no way to publish a stale page by
+forgetting to run something.
 
 ## Contents
 
 | Path | |
 |:--|:--|
-| `index.qmd` | The whole site. Header, deadlines table, week-by-week schedule. |
+| `index.html` | The whole site. Markup, styling, SVG glyphs, and a short script, in one file. |
 | `readings/` | Reading PDFs. |
-| `slides/` | Lecture PDFs. Compiled in `slides/` under `_teaching/`, copied here. |
-| `styles.scss` | Colors, badges, heading sizes. |
-| `_quarto.yml` | Config. The `resources:` key lists what gets copied to `docs/` verbatim. |
+| `slides/` | Lecture PDFs. |
 | `econ7102_fall2026_syllabus.pdf` | Posted syllabus. Compiled in `syllabus/`, copied here. |
 | `econ7102_fall2026_details.pdf` | Course details companion. Compiled in `syllabus/`, copied here. |
-| `docs/` | Render output. Committed. Pages serves this directory. |
+
+## Structure
+
+Each week is a `<details>` block. Each class inside it is an `<article>` holding
+two buckets: slides and readings.
+
+```html
+<details class="week" id="week4" open data-from="2026-09-14" data-to="2026-09-16">
+  <summary><span class="wk">Week 4</span><span class="span">Sep 14–Sep 16</span></summary>
+
+  <article class="meeting">
+    <h3><time>Mon Sep 14</time><span class="cn">06</span><span class="topic">Instrument choice II</span></h3>
+
+    <!-- uncomment when the deck is posted -->
+    <!-- <div class="bucket slides"><span class="tag"><svg class="ic"><use href="#i-slides"/></svg>slides</span><a class="chip" href="slides/class06.pdf">class06.pdf</a></div> -->
+
+    <div class="bucket reading">
+      <span class="tag"><svg class="ic"><use href="#i-paper"/></svg>readings</span>
+      <ul>
+        <li><strong>P&amp;R</strong> Chapter 5</li>
+      </ul>
+    </div>
+  </article>
+</details>
+```
+
+The two buckets are colour-coded by their left rule: moss for slides, clay for
+readings.
+
+## Which week is open
+
+Every week carries `open` in the markup, so with scripting disabled the whole
+schedule is visible. The script at the bottom of the file closes all but one.
+
+It compares today's date against each week's `data-from` and `data-to`, opens
+the match, tags it `this week` in the summary, highlights its number in the nav,
+and scrolls to it. Between meetings or before the term it opens the next week
+that has not finished; after the term, the last one. A `#week9` hash in the URL
+overrides the date.
+
+The attributes are the only thing driving this. Nothing needs maintaining
+during the semester.
 
 ## Editing
 
-`index.qmd` is markdown. No code, no data file, no build step.
+**Post slides.** Every class already has its slides bucket written and
+commented out, with the filename filled in. Drop the PDF into `slides/` and
+delete the `<!--` and `-->` around it.
 
-Structure is `## Week N`, then `### <date> --- Class N: <topic>`, then readings
-as bullets.
+**Add a reading.** Copy a neighbouring `<li>` inside the readings bucket and
+edit it.
 
-Reading entry:
+```html
+<li>Author Name (2026). “Title of the paper.” <em>Journal Name</em>.
+    <a class="dl" href="readings/class18_author-2026.pdf">PDF</a></li>
+```
 
-    - Author Name (2026). "Title of the paper." *Journal Name*. [[PDF](readings/class18_author-2026.pdf)]
+`class="dl"` is the PDF chip, `class="ext"` the external-link chip.
 
-Slide link, on its own line under the class heading, before the readings:
+**Mark a reading.** Append inside the `<li>`:
 
-    [Slides](slides/class05.pdf)
+```html
+<span class="badge resp">response due</span>
+<span class="badge disc">discussion</span>
+```
 
-Markers, appended to the end of a bullet:
-
-    [response due]{.badge-response}
-    [discussion]{.badge-discussion}
+**Write ampersands as `&amp;`** and quotation marks as `“ ”`. Everything else is
+plain text.
 
 Reading PDFs follow `class<NN>_<firstauthor>-<year>.pdf`. Slide PDFs follow
-`class<NN>.pdf`. Both conventions keep the folders sorted by class. Links must
-match filenames exactly, case included.
+`class<NN>.pdf`. Links must match filenames exactly, case included.
 
-Slides go up before class, clean. Annotated copies stay off the site.
+Slides go up before class, clean. Annotated Notability copies stay off the
+site.
 
-`<!-- -->` comments stay in the source and do not render. Four are in the file:
-the SWEEEP placeholder, the guest lecturers, and the Chapter 7 note from Fall
-2025.
+`<!-- -->` comments do not display. Four carry instructor notes: the SWEEEP
+placeholder, the guest lecturers, and the Chapter 7 note from Fall 2025.
 
-To cancel a class, change the heading to `### <date> --- No class` and delete
-the bullets.
+## Schedule changes
 
-## Build
+Class numbers belong to the lecture, not to the calendar slot. Class 6 is
+Instrument choice II and its deck is `class06.pdf` whatever date it lands on.
+Dates belong to the calendar and do not move. A cancellation or a delay
+therefore changes which date a class falls on, and nothing renumbers.
 
-Quarto is the only dependency.
+The semester has no slack: 28 classes fill 28 Mon/Wed slots. Cancelling one
+means cutting, merging, or dropping a topic. Decide that before editing.
 
-    Cmd+Shift+P → Quarto: Render Project
+To push everything back one meeting:
 
-Render Project, not Render, so that `resources:` is recopied. Rendering the
-single file skips `readings/` and the PDFs.
+1. In the cancelled meeting's `<article>`, delete both buckets and change the
+   `<h3>` to the no-class pattern:
+   `<h3><time>Mon Sep 14</time><span class="off-label">Cancelled</span></h3>`,
+   then set `class="meeting off"` on the article.
+2. Working bottom-up, move each `<h3>`, its commented slides bucket, and its
+   readings bucket down into the next `<article>`. Bottom-up, because top-down
+   overwrites blocks not yet moved. Select the lines and hold Option+Down.
+3. Delete the block left stranded at the end.
+4. Commit and push.
 
-First-time setup and publishing: `SETUP.md`.
+The `data-from` and `data-to` attributes on each week stay as they are. They
+describe the calendar, which has not changed.
+
+`syllabus/schedule_table.tex` is the plan as of the start of term and is
+allowed to drift. The details PDF says so. Recompile it only for a large
+change.
 
 ## Constraints
 
@@ -69,7 +132,7 @@ First-time setup and publishing: `SETUP.md`.
 the USG rule. It stays near-constant across years. Course material does not go
 in it.
 
-Year-to-year changes go in four files: `index.qmd`,
+Year-to-year changes go in four files: `index.html`,
 `syllabus/econ7102_fall2026_details.tex`, `syllabus/assignments.tex`,
 `syllabus/schedule_table.tex`.
 
@@ -80,3 +143,24 @@ Lecture decks are beamer, compiled with pdflatex, sources in
 
 No `CNAME` file in this repository. The `cjwichman.github.io` user site already
 carries one, and it covers project pages.
+
+## Styling
+
+The palette lives in the `:root` block at the top of the `<style>` element.
+Changing a course colour means changing one variable.
+
+| Variable | Use |
+|:--|:--|
+| `--paper`, `--card` | Backgrounds |
+| `--ink`, `--body`, `--mute`, `--faint` | Text, darkest to lightest |
+| `--clay` | Readings bucket, section labels, current week |
+| `--moss` | Slides bucket |
+| `--slate` | Links, class-number chips |
+| `--sand` | Response-due badge |
+
+Metadata is set in `--mono` and prose in `--sans`. Dates, class numbers,
+filenames, and labels are all mono, which is what makes the page read as a
+schedule rather than an essay.
+
+The two SVG glyphs are defined once in a hidden `<svg>` at the top of `<body>`
+and referenced with `<use href="#i-slides">` and `<use href="#i-paper">`.
