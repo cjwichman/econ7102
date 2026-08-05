@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Materials — ECON 7102</title>
+<meta name="description" content="All slides and readings posted for ECON 7102, Fall 2026.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-slides" viewBox="0 0 16 16">
+    <rect x="1.5" y="2.5" width="13" height="9" rx="1"/><path d="M8 11.5v2M5.5 13.5h5"/>
+  </symbol>
+  <symbol id="i-paper" viewBox="0 0 16 16">
+    <path d="M3.5 1.5h6l3 3v10h-9z"/><path d="M9.5 1.5v3h3M5.5 8h5M5.5 10.5h5"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Georgia Tech &middot; Fall 2026</p>
+  <h1>Materials</h1>
+  <p class="sub">ECON 7102 — everything posted so far</p>
+  <p class="docs">
+    <a href="index.html">Schedule</a>
+    <a href="econ7102_fall2026_details.pdf">Course details (PDF)</a>
+    <a href="econ7102_fall2026_syllabus.pdf">Syllabus (PDF)</a>
+  </p>
+</header>
+
+<h2 id="h-slides">
+  <svg class="ic"><use href="#i-slides"/></svg>Slides<span class="count" id="n-slides"></span>
+</h2>
+<div class="filelist" id="slides"><p class="status">Loading…</p></div>
+
+<h2 id="h-readings">
+  <svg class="ic"><use href="#i-paper"/></svg>Readings<span class="count" id="n-readings"></span>
+</h2>
+<div class="filelist" id="readings"><p class="status">Loading…</p></div>
+
+<footer>
+  <span>ECON 7102 &middot; Casey J. Wichman</span>
+  <span>Georgia Institute of Technology</span>
+</footer>
+
+</div>
+
+<script>
+/* This page lists whatever is actually in slides/ and readings/, read from the
+   GitHub contents API at load time. Nothing here is hand-maintained, so the
+   listing cannot drift from the repository.
+
+   If the repository is ever renamed, change REPO. */
+var REPO = 'cjwichman/econ7102';
+
+function size(bytes) {
+  return bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + ' MB'
+                          : Math.round(bytes / 1024) + ' KB';
+}
+
+function render(folder, boxId, countId) {
+  var box = document.getElementById(boxId);
+  var count = document.getElementById(countId);
+
+  fetch('https://api.github.com/repos/' + REPO + '/contents/' + folder)
+    .then(function (r) {
+      if (!r.ok) { throw new Error(r.status); }
+      return r.json();
+    })
+    .then(function (items) {
+      var files = items
+        .filter(function (f) { return f.type === 'file' && /\.pdf$/i.test(f.name); })
+        .sort(function (a, b) { return a.name.localeCompare(b.name); });
+
+      if (!files.length) {
+        box.innerHTML = '<p class="status">Nothing posted yet.</p>';
+        return;
+      }
+
+      box.innerHTML = files.map(function (f) {
+        return '<a href="' + folder + '/' + f.name + '">'
+             + '<span class="fn">' + f.name + '</span>'
+             + '<span class="sz">' + size(f.size) + '</span></a>';
+      }).join('');
+
+      count.textContent = files.length + ' file' + (files.length === 1 ? '' : 's');
+    })
+    .catch(function () {
+      box.innerHTML = '<p class="status err">Could not load the file list. '
+        + 'Browse it directly at <a href="https://github.com/' + REPO
+        + '/tree/main/' + folder + '">github.com/' + REPO + '/' + folder + '</a>.</p>';
+    });
+}
+
+render('slides', 'slides', 'n-slides');
+render('readings', 'readings', 'n-readings');
+</script>
+
+</body>
+</html>

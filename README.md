@@ -6,17 +6,19 @@ Course website. Static HTML, served from GitHub Pages at
 Scope is the weekly schedule, the readings, and the slides. Course policies
 live in the syllabus PDF and are not repeated here.
 
-No build step. `index.html` is both the source and what gets served. Editing it
-and pushing puts the change live. There is no way to publish a stale page by
-forgetting to run something.
+No build step. The HTML files are both the source and what gets served.
+Editing one and pushing puts the change live. There is no way to publish a
+stale page by forgetting to run something.
 
 ## Contents
 
 | Path | |
 |:--|:--|
-| `index.html` | The whole site. Markup, styling, SVG glyphs, and a short script, in one file. |
-| `readings/` | Reading PDFs. |
-| `slides/` | Lecture PDFs. |
+| `index.html` | The schedule. Everything except styling lives here. |
+| `materials.html` | Flat list of every posted slide deck and reading. Builds itself. |
+| `style.css` | Shared by both pages. Palette is at the top. |
+| `readings/` | Reading PDFs, named `author-year.pdf`. |
+| `slides/` | Lecture PDFs, named `classNN.pdf`. |
 | `econ7102_fall2026_syllabus.pdf` | Posted syllabus. Compiled in `syllabus/`, copied here. |
 | `econ7102_fall2026_details.pdf` | Course details companion. Compiled in `syllabus/`, copied here. |
 
@@ -48,6 +50,21 @@ two buckets: slides and readings.
 The two buckets are colour-coded by their left rule: moss for slides, clay for
 readings.
 
+## The materials page
+
+`materials.html` lists everything in `slides/` and `readings/`. It is not
+hand-maintained: at load time it reads both folders through the GitHub contents
+API and prints what is actually there, with file sizes. Adding a PDF to either
+folder puts it on that page with no further edit.
+
+The repository name is set in one variable at the top of the script, `REPO`.
+That is the only thing to change if the repo is ever renamed. The API is
+unauthenticated, which is fine at course traffic; if a request fails the page
+falls back to a direct link to the GitHub folder view.
+
+This is separate from the schedule. A reading only appears in a class on
+`index.html` when its `<li>` is written there.
+
 ## Which week is open
 
 Every week carries `open` in the markup, so with scripting disabled the whole
@@ -73,7 +90,7 @@ edit it.
 
 ```html
 <li>Author Name (2026). “Title of the paper.” <em>Journal Name</em>.
-    <a class="dl" href="readings/class18_author-2026.pdf">PDF</a></li>
+    <a class="dl" href="readings/author-2026.pdf">PDF</a></li>
 ```
 
 `class="dl"` is the PDF chip, `class="ext"` the external-link chip.
@@ -88,8 +105,12 @@ edit it.
 **Write ampersands as `&amp;`** and quotation marks as `“ ”`. Everything else is
 plain text.
 
-Reading PDFs follow `class<NN>_<firstauthor>-<year>.pdf`. Slide PDFs follow
-`class<NN>.pdf`. Links must match filenames exactly, case included.
+Reading PDFs are named `<firstauthor>-<year>.pdf` with no class prefix, so
+moving a reading to a different class does not mean renaming the file. Slide
+PDFs are `class<NN>.pdf`, because a deck belongs to a lecture and the number is
+the join between the deck, the schedule, and the syllabus table.
+
+Links must match filenames exactly, case included.
 
 Slides go up before class, clean. Annotated Notability copies stay off the
 site.
@@ -162,5 +183,9 @@ Metadata is set in `--mono` and prose in `--sans`. Dates, class numbers,
 filenames, and labels are all mono, which is what makes the page read as a
 schedule rather than an essay.
 
-The two SVG glyphs are defined once in a hidden `<svg>` at the top of `<body>`
-and referenced with `<use href="#i-slides">` and `<use href="#i-paper">`.
+The two SVG glyphs are defined in a hidden `<svg>` at the top of `<body>` on
+each page and referenced with `<use href="#i-slides">` and
+`<use href="#i-paper">`.
+
+`style.css` is shared by both pages. It is a plain stylesheet, not compiled
+from anything.
