@@ -1,0 +1,91 @@
+/*-- scss:defaults --*/
+
+// Georgia Tech palette, muted for long-form reading.
+$gt-navy:   #003057;
+$gt-gold:   #b3a369;
+$gt-grey:   #54585a;
+
+$primary:   $gt-navy;
+$link-color: $gt-navy;
+$body-color: #21252b;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Helvetica, Arial, sans-serif;
+$font-size-root: 17px;
+
+/*-- scss:rules --*/
+
+.navbar {
+  border-bottom: 3px solid $gt-gold;
+}
+
+h1, h2, h3 {
+  color: $gt-navy;
+  font-weight: 600;
+}
+
+// Week headings.
+h2 {
+  border-bottom: 2px solid $gt-gold;
+  padding-bottom: 0.2rem;
+  margin-top: 2.75rem;
+  font-size: 1.5rem;
+}
+
+// Class headings: date and topic. Smaller than the week they sit under.
+h3 {
+  font-size: 1.12rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.4rem;
+}
+
+// Reading list entries: hanging indent keeps citations legible.
+#quarto-document-content ul li {
+  margin-bottom: 0.45rem;
+}
+
+// Inline badges marking response and discussion readings.
+.badge-response,
+.badge-discussion {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 0.12em 0.5em;
+  border-radius: 3px;
+  vertical-align: 0.08em;
+  white-space: nowrap;
+}
+
+.badge-response {
+  background: $gt-gold;
+  color: #2b2617;
+}
+
+.badge-discussion {
+  background: #e6ebf0;
+  color: $gt-navy;
+  border: 1px solid #c7d2dc;
+}
+
+// Schedule table.
+table {
+  font-size: 0.94rem;
+}
+
+table td:nth-child(3) {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+// Non-meeting days read as secondary.
+table td em {
+  color: $gt-grey;
+}
+
+// PDF and link markers after each citation.
+li a[href$=".pdf"] {
+  font-weight: 600;
+}

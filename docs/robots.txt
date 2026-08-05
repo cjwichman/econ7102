@@ -1,0 +1,13 @@
+# Course site. The reading PDFs are posted for enrolled students, not for
+# search indexing or bulk crawling.
+User-agent: *
+Disallow: /readings/
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /

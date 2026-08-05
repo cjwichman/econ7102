@@ -1,0 +1,17 @@
+---
+title: "Readings"
+toc-depth: 2
+---
+
+**P&R** refers to Phaneuf and Requate (2017), the required text.
+
+Readings marked [response due]{.badge-response} require a written response,
+submitted by 11:59 PM the day before class. Readings marked
+[discussion]{.badge-discussion} are eligible for a student-led discussion in
+the topics section of the course.
+
+This list is tentative. It will change with the pacing of the course. Each
+week I will indicate where to focus your reading effort, for example on
+particular sections within an assigned chapter or paper.
+
+{{< include _generated/readings.md >}}

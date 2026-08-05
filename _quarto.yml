@@ -1,0 +1,28 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+  resources:
+    - readings/**
+    - robots.txt
+    - .nojekyll
+    - econ7102_fall2026_syllabus.pdf
+    - econ7102_fall2026_details.pdf
+
+website:
+  title: "ECON 7102"
+  description: "Environmental Economics I, Georgia Institute of Technology"
+  site-url: "https://caseyjwichman.com/econ7102/"
+  page-footer:
+    left: "ECON 7102 &middot; Fall 2026 &middot; Casey J. Wichman"
+    right: "Georgia Institute of Technology"
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    anchor-sections: true
+    link-external-newwindow: true
+    smooth-scroll: true
