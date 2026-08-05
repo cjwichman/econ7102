@@ -6,14 +6,15 @@ toc-title: "Jump to week"
 toc-depth: 2
 ---
 
-Mon/Wed, 11:00 AM -- 12:15 PM &middot; Classroom: West Architecture 259 &middot;
+Mon/Wed, 11:00 AM -- 12:15 PM &middot; Classroom TBD &middot;
 Prof. Casey J. Wichman, [wichman@gatech.edu](mailto:wichman@gatech.edu)
 
 [**Course details (PDF)**](econ7102_fall2026_details.pdf) --- assignments,
 deadlines, and the full schedule.
 [**Syllabus (PDF)**](econ7102_fall2026_syllabus.pdf) --- course policies.
 
-**P&R** is Phaneuf & Requate (2017), the required text.
+Slides are posted before each class. **P&R** is Phaneuf & Requate (2017), the
+required text.
 [response due]{.badge-response} means a written response, submitted on Canvas
 by 11:59 PM the night before class. [discussion]{.badge-discussion} marks
 papers eligible for a student-led discussion.

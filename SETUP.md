@@ -1,138 +1,90 @@
-# Setting up the site
+# Setup
 
-No terminal, no build step. Edit markdown, click Render, push.
+## Dependencies
 
----
+- Quarto CLI, <https://quarto.org/docs/get-started/>
+- GitHub Desktop, <https://desktop.github.com>
+- VS Code, Quarto extension by Posit
 
-## Step 1 — Install two things
+## Location
 
-**Quarto CLI.** macOS installer at <https://quarto.org/docs/get-started/>.
+Keep the working copy outside Dropbox. Git and Dropbox manage the same
+directory and corrupt each other's state.
 
-**GitHub Desktop.** <https://desktop.github.com>. Sign in with your GitHub
-account. This handles every git operation with buttons.
+`~/Documents/GitHub/econ7102` is the current location. macOS gates
+`~/Documents` under Privacy & Security → Files and Folders. If VS Code throws
+`EPERM` on `_quarto.yml`, either grant it Documents Folder access there, or
+move the repository to `~/GitHub/econ7102`, which is not gated.
 
-Also install the **Quarto** extension in VS Code (by Posit). That gives you the
-Render and Preview buttons.
+The Dropbox copy at `_teaching/FALL2026/ECON7102/website/` is the archive.
 
----
+## First publish
 
-## Step 2 — Copy the project out of Dropbox
+1. Render. `Cmd+Shift+P → Quarto: Render Project`. Confirm `docs/index.html`
+   exists.
+2. GitHub Desktop → File → Add Local Repository → select the folder. It offers
+   to create a repository. Accept. Name it `econ7102`. The folder already has a
+   `.gitignore`, so leave those fields alone.
+3. Publish repository. Uncheck *Keep this code private*. The first push runs
+   about 130 MB and takes a few minutes.
+4. On github.com: Settings → Pages → Source: *Deploy from a branch* → `main`
+   and `/docs`. Save.
+5. Load <https://caseyjwichman.com/econ7102/>.
 
-Git and Dropbox both want to manage the same directory and corrupt each
-other's state.
+The `cjwichman.github.io` user site carries a custom domain, so project sites
+serve from `caseyjwichman.com` as well. `cjwichman.github.io/econ7102`
+redirects there. Cite the `caseyjwichman.com` address. Do not add a `CNAME`
+file to this repository.
 
-In Finder: copy `Dropbox/_teaching/FALL2026/ECON7102/website` into
-`Documents/Github/`, then rename the copy to `econ7102`.
+A 404 after step 5 means either `docs/index.html` is missing from the
+repository or `.nojekyll` is missing from the root.
 
----
-
-## Step 3 — Render
-
-Open `index.qmd` in VS Code and click **Render** in the top right. This writes
-the site to `docs/`.
-
-**Preview** instead of Render gives you a live browser view that refreshes on
-save. That is the better mode for editing.
-
----
-
-## Step 4 — Publish
-
-In **GitHub Desktop**:
-
-1. **File → Add Local Repository**, choose `~/Documents/Github/econ7102`.
-   It will say the folder is not a git repository and offer to **create a
-   repository** here. Take that.
-2. Name it `econ7102`. Leave the git ignore and license fields alone, the
-   folder already has a `.gitignore`.
-3. Click **Publish repository**. Uncheck *Keep this code private*.
-
-The first publish is around 130 MB because of the reading PDFs, so give it a
-few minutes.
-
----
-
-## Step 5 — Turn on GitHub Pages
-
-On github.com, in the `econ7102` repository:
-
-**Settings → Pages → Build and deployment → Source: Deploy from a branch**
-
-Set the branch to `main` and the folder to `/docs`. Save.
-
-Wait a minute or two, then load <https://caseyjwichman.com/econ7102/>.
-
-Because your user site `cjwichman.github.io` has a custom domain, project
-sites serve from that domain too. `cjwichman.github.io/econ7102` redirects
-there. Use the `caseyjwichman.com` address everywhere. Do **not** add a
-`CNAME` file to this repository — the user site's CNAME already covers it, and
-a second one causes conflicts.
-
-If you get a 404, confirm `docs/index.html` exists in the repository and that
-`.nojekyll` sits at the repository root.
-
----
-
-## The routine
+## Routine
 
 1. Edit `index.qmd`.
-2. Click **Render**.
-3. In GitHub Desktop: type a summary, **Commit to main**, then **Push origin**.
+2. `Cmd+Shift+P → Quarto: Render Project`.
+3. GitHub Desktop: summary, Commit to main, Push origin.
 
 Live about a minute after the push.
 
-To add a reading: drop the PDF into `readings/` and add a bullet pointing at
-it. Naming is a convention, not a rule — `class18_author-2026.pdf` keeps the
-folder sorted by class.
+While editing text, use Preview instead. It refreshes on save. Render Project
+before committing, so `readings/` and the PDFs get recopied.
 
----
+Adding a reading: drop the PDF into `readings/`, add a bullet pointing at it.
 
 ## The two PDFs
 
-Both live in `Dropbox/_teaching/FALL2026/ECON7102/syllabus/`.
+Both compile in `_teaching/FALL2026/ECON7102/syllabus/`. Neither is connected
+to the site beyond the links at the top of `index.qmd`.
 
-`econ7102_fall2026_public.tex` is the syllabus posted publicly under the USG
-rule. It is close to constant across years. **Leave it alone.** Course material
-does not go in it.
+`econ7102_fall2026_public.tex` is the posted syllabus. Leave it alone.
 
-`econ7102_fall2026_details.tex` is the living companion. It pulls in two
-hand-maintained files from the same folder:
+`econ7102_fall2026_details.tex` is the living companion. It inputs
+`assignments.tex` and `schedule_table.tex` from the same folder.
 
-```latex
-\input{assignments.tex}
-\input{schedule_table.tex}
-```
-
-Recompile whichever changed, then copy the PDF into this folder as
+After recompiling either, copy the PDF into the website folder as
 `econ7102_fall2026_syllabus.pdf` or `econ7102_fall2026_details.pdf`, render,
-and push.
-
----
+push.
 
 ## Annual rollover
 
-The repository is named `econ7102`, not `econ7102-fall2026`, so the URL stays
-right year after year. The site always shows the current term.
+The repository is unversioned so the URL survives. The site shows the current
+term only.
 
-Before editing for a new term, freeze the old one. On github.com:
+Freeze the previous term first. On github.com: Releases → Draft a new release →
+Choose a tag → type `fall2026` → Create new tag → Publish release. The state as
+taught stays browsable from the Releases page.
 
-**Releases → Draft a new release → Choose a tag → type `fall2026` → Create new
-tag → Publish release**
-
-That marks the state of the site as taught, browsable from the Releases page.
-Then update `index.qmd` with new dates and topics, recompile the details PDF,
-swap both PDFs in, render, push. The public syllabus usually needs only a date
+Then update dates and topics in `index.qmd`, recompile the details PDF, swap
+both PDFs in, render, push. The public syllabus normally needs only a date
 change.
 
----
+## Failure modes
 
-## Troubleshooting
-
-**Render fails.** Usually a stray character in a markdown table. Quarto names
-the line.
-
-**A reading link 404s on the live site.** The filename in the bullet does not
-match the file in `readings/`. Case matters.
-
-**Push rejected, file too large.** GitHub blocks single files over 100 MB.
-Compress the PDF in Preview (File → Export, Quartz filter: Reduce File Size).
+| Symptom | Cause |
+|:--|:--|
+| `EPERM` opening a file | macOS Privacy gating on `~/Documents`. See Location above. |
+| Render fails, names a line | Usually a stray character in a markdown table. |
+| Reading link 404s on the live site | Filename in the bullet does not match `readings/`. Case matters. |
+| PDFs missing after render | Ran Render instead of Render Project. |
+| Push rejected, file too large | GitHub caps single files at 100 MB. Compress in Preview: File → Export, Quartz filter *Reduce File Size*. |

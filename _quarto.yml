@@ -5,6 +5,7 @@ project:
     - index.qmd
   resources:
     - readings/**
+    - slides/**
     - robots.txt
     - .nojekyll
     - econ7102_fall2026_syllabus.pdf
