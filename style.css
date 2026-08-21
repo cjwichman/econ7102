@@ -252,6 +252,7 @@ a.ext:hover { background: #e7e4de; }
 }
 .badge.resp { background: #f6ecc9; color: #6b551a; border: 1px solid #e6d59b; }
 .badge.disc { background: #edeef1; color: var(--slate); border: 1px solid #dcdfe5; }
+.badge.abst { background: #e2eef2; color: #2d5a6b; border: 1px solid #c8dde6; }
 
 .aside { margin: 0.15rem 0 0 1rem; font-size: 0.89rem; color: var(--mute); font-style: italic; }
 
