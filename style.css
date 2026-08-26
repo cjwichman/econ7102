@@ -156,6 +156,7 @@ table.deadlines td:last-child { font-size: 0.94rem; }
 .weeknav button:hover { border-color: var(--slate); color: var(--slate); }
 
 /* ------------------------------------------------------------------ weeks */
+.week { scroll-margin-top: 70px; }
 .week { border-bottom: 1px solid var(--rule); }
 .week > summary {
   cursor: pointer; list-style: none; display: flex; align-items: baseline;
