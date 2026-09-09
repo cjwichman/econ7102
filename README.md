@@ -6,10 +6,6 @@ Course website. Static HTML, served from GitHub Pages at
 Scope is the weekly schedule, the readings, and the slides. Course policies
 live in the syllabus PDF and are not repeated here.
 
-No build step. The HTML files are both the source and what gets served.
-Editing one and pushing puts the change live. There is no way to publish a
-stale page by forgetting to run something.
-
 ## Contents
 
 | Path | |
