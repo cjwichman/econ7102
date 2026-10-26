@@ -235,6 +235,10 @@ table.deadlines td:last-child { font-size: 0.94rem; }
 .bucket.reading ul { margin: 0; padding-left: 1.05rem; }
 .bucket.reading li { margin-bottom: 0.5rem; font-size: 0.95rem; }
 .bucket.reading li::marker { color: var(--faint); }
+.bucket.reading .more {
+  margin: 0.8rem 0 0.4rem; font: 500 0.72rem/1 var(--mono);
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint);
+}
 .bucket.empty .tbd { font-size: 0.9rem; color: var(--faint); font-style: italic; }
 
 a.dl, a.ext {
